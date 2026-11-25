@@ -827,7 +827,8 @@ details.howto .howto-body{
     $("cardBody").innerHTML =
       '<div style="text-align:center;padding:2px 2px 4px">' +
         '<div style="font-size:11px;font-weight:900;letter-spacing:2.5px;color:#b8890a;text-transform:uppercase;margin-bottom:6px">' + esc(p.gym) + '</div>' +
-        '<h2 style="font-size:clamp(23px,7vw,31px);font-weight:900;letter-spacing:-.5px;color:#141f38;line-height:1.1;text-transform:uppercase;margin-bottom:10px">' + esc(p.name) + '</h2>' +
+        '<h2 style="font-size:clamp(23px,7vw,31px);font-weight:900;letter-spacing:-.5px;color:#141f38;line-height:1.1;text-transform:uppercase;margin-bottom:6px">' + esc(p.name) + '</h2>' +
+        '<div style="font-size:11px;font-weight:800;letter-spacing:1.6px;color:#93a1bd;text-transform:uppercase;margin-bottom:10px">Treinador ' + esc(S.name) + '</div>' +
         '<div style="width:62px;height:62px;margin:0 auto 10px;display:grid;place-items:center;font-size:30px;clip-path:polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);background:linear-gradient(160deg,#fff2a8,#ffcb05 55%,#dd9f00)">' + p.icon + '</div>' +
         '<p style="font-size:14.5px;line-height:1.55;color:#46567a;font-weight:600;max-width:420px;margin:0 auto 16px">' + p.rule + '</p>' +
         '<button class="btn" id="beginBtn">Entrar no ginásio ▸</button>' +
@@ -995,7 +996,7 @@ details.howto .howto-body{
     S.results[S.phase][S.i] = "miss";
     anim($("card"), "shake", 500);
     anim($("heroCreature"), "hit", 500);
-    S.missed[S.phase].push({ q: "____ " + it.q, a: v + " / " + it.a });
+    S.missed[S.phase].push({ q: "____ " + it.q, a: it.a + " " + it.q });
 
     var zone = $("zone");
     if(zone){
@@ -1014,6 +1015,7 @@ details.howto .howto-body{
   function checkOrder(){
     if(S.handled) return;
     var p = DATA[S.phase], it = p.items[S.i];
+    if(placed.length !== it.tokens.length) return;
     var built = placed.map(function(x){ return x.t; }).join(" ");
     var target = it.tokens.join(" ");
     var line = $("answerLine");
