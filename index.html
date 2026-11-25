@@ -483,7 +483,7 @@ details.howto .howto-body{
       </svg>
     </div>
 
-    <p class="tagline">3 ginásios. 3 insígnias. <b>24 desafios</b> de inglês.<br>Você consegue virar um Mestre Pokémon?</p>
+    <p class="tagline">3 ginásios. 3 insígnias. <b><span id="totalChallenges">30</span> desafios</b> de inglês.<br>Você consegue virar um Mestre Pokémon?</p>
 
     <div class="namebox">
       <label for="trainerName">Treinador</label>
@@ -621,16 +621,22 @@ details.howto .howto-body{
       rule:"Use <b>DO</b> para tarefas e obrigações (do the dishes).<br>Use <b>MAKE</b> para coisas que você cria ou produz (make a sandwich).",
       type:"pick",
       items:[
-        {q:"the dishes", a:"DO", emoji:"🍽️", why:"Dizemos <b>do the dishes</b>. Tarefas de casa pedem DO."},
-        {q:"the laundry", a:"DO", emoji:"🧺", why:"Dizemos <b>do the laundry</b>. Tarefas de casa pedem DO."},
-        {q:"homework", a:"DO", emoji:"📚", why:"Dizemos <b>do homework</b>. Dever de casa é tarefa, então DO."},
-        {q:"exercise", a:"DO", emoji:"🏃", why:"Dizemos <b>do exercise</b>. Atividades físicas pedem DO."},
-        {q:"the housework", a:"DO", emoji:"🧹", why:"Dizemos <b>do the housework</b>. Trabalho de casa pede DO."},
         {q:"a sandwich", a:"MAKE", emoji:"🥪", why:"Dizemos <b>make a sandwich</b>. Você cria o sanduíche, então MAKE."},
+        {q:"the dishes", a:"DO", emoji:"🍽️", why:"Dizemos <b>do the dishes</b>. Tarefas de casa pedem DO."},
         {q:"a plan", a:"MAKE", emoji:"🗺️", why:"Dizemos <b>make a plan</b>. Você cria o plano, então MAKE."},
-        {q:"a mistake", a:"MAKE", emoji:"💥", why:"Dizemos <b>make a mistake</b>. É uma expressão fixa com MAKE."},
+        {q:"the laundry", a:"DO", emoji:"🧺", why:"Dizemos <b>do the laundry</b>. Tarefas de casa pedem DO."},
         {q:"a noise", a:"MAKE", emoji:"🔊", why:"Dizemos <b>make a noise</b>. O som é produzido, então MAKE."},
-        {q:"breakfast", a:"MAKE", emoji:"🍳", why:"Dizemos <b>make breakfast</b>. Você prepara a comida, então MAKE."}
+        {q:"homework", a:"DO", emoji:"📚", why:"Dizemos <b>do homework</b>. Dever de casa é tarefa, então DO."},
+        {q:"the housework", a:"DO", emoji:"🧹", why:"Dizemos <b>do the housework</b>. Trabalho de casa pede DO."},
+        {q:"breakfast", a:"MAKE", emoji:"🍳", why:"Dizemos <b>make breakfast</b>. Você prepara a comida, então MAKE."},
+        {q:"a mistake", a:"MAKE", emoji:"💥", why:"Dizemos <b>make a mistake</b>. É uma expressão fixa com MAKE."},
+        {q:"exercise", a:"DO", emoji:"🏃", why:"Dizemos <b>do exercise</b>. Atividades físicas pedem DO."},
+        {q:"a phone call", a:"MAKE", emoji:"📞", why:"Dizemos <b>make a phone call</b>. É uma expressão fixa com MAKE."},
+        {q:"the shopping", a:"DO", emoji:"🛒", why:"Dizemos <b>do the shopping</b>. É uma tarefa, então DO."},
+        {q:"a cake", a:"MAKE", emoji:"🎂", why:"Dizemos <b>make a cake</b>. Você prepara o bolo, então MAKE."},
+        {q:"the chores", a:"DO", emoji:"📋", why:"Dizemos <b>do the chores</b>. Tarefas de casa pedem DO."},
+        {q:"a mess", a:"MAKE", emoji:"🌀", why:"Dizemos <b>make a mess</b>. Você cria a bagunça, então MAKE."},
+        {q:"the cleaning", a:"DO", emoji:"🧽", why:"Dizemos <b>do the cleaning</b>. Tarefa de casa pede DO."}
       ]
     },
     {
@@ -819,7 +825,7 @@ details.howto .howto-body{
     clearTimer();
     S.handled = false;
     var p = DATA[S.phase];
-    S.done = S.phase === 0 ? 0 : (S.phase === 1 ? 10 : 16);
+    S.done = 0; for(var z = 0; z < S.phase; z++){ S.done += DATA[z].items.length; }
     updateHUD();
     $("gymTag").textContent = p.gym + " · " + (S.phase+1) + " de 3";
     $("hudPhase").textContent = p.gym + " · " + p.name;
@@ -1256,6 +1262,8 @@ details.howto .howto-body{
   }
 
   /* ================= START ================= */
+  $("totalChallenges").textContent = TOTAL;
+
   $("startBtn").addEventListener("click", function(){
     var nm = ($("trainerName").value || "TRAINER").trim().toUpperCase() || "TRAINER";
     S.name = nm.slice(0,12);
